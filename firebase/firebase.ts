@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app"
 import { getStorage } from 'firebase/storage'
 import { getFirestore, collection, FirestoreDataConverter, DocumentData, WithFieldValue, QueryDocumentSnapshot, SnapshotOptions } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
-import { DatabaseItem } from '../models/models'
+import { DatabaseItem, User } from '../models/models'
 import { firebaseConfig } from "./firebaseConfig"
 
 const app = initializeApp(firebaseConfig)
@@ -11,8 +11,9 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 const db = getFirestore(app);
 const faunaRef = collection(db, 'sea-fauna')
+const usersRef = collection(db, 'users')
 
-const itemConverter: FirestoreDataConverter<DatabaseItem> = {
+const faunaConverter: FirestoreDataConverter<DatabaseItem> = {
   toFirestore(item: WithFieldValue<DatabaseItem>): DocumentData {
     return { 
         typeOfSpecies: item.typeOfSpecies,
@@ -29,7 +30,7 @@ const itemConverter: FirestoreDataConverter<DatabaseItem> = {
   ): DatabaseItem {
     const data = snapshot.data(options);
     return {
-        id: data.id,
+        id: snapshot.id,
         name: data.name,
         typeOfSpecies: data.typeOfSpecies,
         description: data.description,
@@ -40,4 +41,24 @@ const itemConverter: FirestoreDataConverter<DatabaseItem> = {
   },
 }
 
-export { auth, db, faunaRef, storage, itemConverter }
+const userConverter: FirestoreDataConverter<User> = {
+  toFirestore(item: WithFieldValue<User>): DocumentData {
+    return { 
+        saved: item.saved,
+        isAdmin: item.isAdmin
+    };
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ): User {
+    const data = snapshot.data(options);
+    return {
+        id: snapshot.id,
+        saved: data.saved,
+        isAdmin: data.isAdmin
+    };
+  },
+}
+
+export { auth, db, faunaRef, usersRef, storage, faunaConverter, userConverter }

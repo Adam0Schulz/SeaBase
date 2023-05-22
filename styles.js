@@ -18,6 +18,5 @@ export const styles = StyleSheet.create({
     },
     cont: {
       marginBottom: PAGE_PADDING,
-      marginHorizontal: PAGE_PADDING
     }
   });

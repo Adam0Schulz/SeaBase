@@ -6,11 +6,13 @@ export interface DatabaseItem {
     name: string,
     description: string,
     price: number,
-    habitat?: Region, // will fill this in when I know what data type it is
+    habitat: Region,
     images: string[]
 }
 
 export interface User {
-    email: string,
+    id?: string,
+    saved: string[],
+    isAdmin: boolean
     
 }

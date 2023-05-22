@@ -19,7 +19,7 @@ const Heading = (props: Props) => {
 const style = StyleSheet.create({
     heading: {
         color: COLOR_PRIMARY,
-        fontSize: 64,
+        fontSize: 55,
         marginTop: 30,
         
         

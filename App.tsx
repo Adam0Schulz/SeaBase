@@ -23,7 +23,7 @@ export default function App() {
       screenOptions={{
         headerShown: false
       }}
-      initialRouteName='database'
+      initialRouteName='login'
       >
         <Stack.Screen
         name='login'

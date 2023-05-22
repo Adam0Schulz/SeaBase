@@ -9,7 +9,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StackParams } from '../../App'
 
 interface Props {
-    item: DocumentData
+    item: DocumentData,
+    isAdmin?: boolean
 }
 
 
